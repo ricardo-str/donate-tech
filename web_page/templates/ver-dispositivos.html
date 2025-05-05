@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ver-dispositivos.css') }}">
+    <title>Ver Dispositivos</title>
+</head>
+<body>
+    <h1>Listado de Donaciones</h1>
+    <table>
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Nombre Dispositivo</th>
+            <th>Estado</th>
+            <th>Comuna</th>
+            <th>Fotos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dispositivo in dispositivos %}
+          <tr data-href="{{ url_for('informacion_dispositivo', id=dispositivo['id']) }}" onclick="window.location.href=this.getAttribute('data-href');">
+            <td>{{ dispositivo['tipo'] }}</td>
+            <td>{{ dispositivo['nombre'] }}</td>  
+            <td>{{ dispositivo['estado'] }}</td>
+            <td>{{ dispositivo['comuna'] }}</td>
+            <td>
+              {% if dispositivo['foto'] %}
+                <img src="{{ url_for('static', filename='uploads/' + dispositivo['foto']) }}" alt="Foto de {{ dispositivo['nombre'] }}" width="120" height="120">
+              {% else %}
+                <img src="{{ url_for('static', filename='img/no-image.jpg') }}" alt="Sin foto" width="120" height="120">
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="{{ url_for('ver_dispositivos', page=page-1) }}" class="pagination-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+            </svg>
+            <span class="ml-1 font-bold">Anterior</span>
+        </a>
+        {% endif %}
+        
+        <span>Página {{ page }} de {{ (total / per_page)|round(0, 'ceil')|int }}</span>
+        
+        {% if page * per_page < total %}
+        <a href="{{ url_for('ver_dispositivos', page=page+1) }}" class="pagination-link">
+            <span class="mr-1 font-bold">Siguiente</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+  
+
+  <a href="{{ url_for('index') }}" class="button">Volver al inicio</a>
+    
+</body>
+</html>

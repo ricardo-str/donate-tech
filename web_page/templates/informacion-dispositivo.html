@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/informacion-dispositivo.css') }}">
+    <title>Información del Dispositivo</title>
+</head>
+<body>
+    <table>
+        <caption>Información del Dispositivo</caption>
+        <thead>
+          <tr>
+            <th>Información</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nombre donante:</td>
+            <td>{{ dispositivo.contacto_nombre }}</td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td>{{ dispositivo.email }}</td>
+          </tr>
+          <tr>
+            <td>Número celular:</td>
+            <td>{{ dispositivo.celular }}</td>
+          </tr>
+          <tr>
+            <td>Comuna:</td>
+            <td>{{ dispositivo.comuna_nombre }}</td>
+          </tr>
+          <tr>
+            <td>Nombre dispositivo:</td>
+            <td>{{ dispositivo.dispositivo_nombre }}</td>
+          </tr>
+          <tr>
+            <td>Descripción:</td>
+            <td>{{ dispositivo.descripcion }}</td>
+          </tr>
+          <tr>
+            <td>Tipo:</td>
+            <td>{{ dispositivo.tipo }}</td>
+          </tr>
+          <tr>
+            <td>Años de uso:</td>
+            <td>{{ dispositivo.anos_uso }}</td>
+          </tr>
+          <tr>
+            <td>Estado funcionamiento:</td>
+            <td>{{ dispositivo.estado }}</td>
+          </tr>
+          <tr>
+            <td>Foto donación:</td>
+            <td>
+                {% if dispositivo.fotos and dispositivo.fotos|length > 0 %}
+                    <img id="foto" src="{{ url_for('static', filename='uploads/' + dispositivo.fotos[0].ruta_archivo) }}" alt="Foto de {{ dispositivo.dispositivo_nombre }}" width="640" height="480">
+                    <div id="myModal" class="modal">
+                        <div class="modal-cont">
+                            <span class="close">&times;</span>
+                            <img src="{{ url_for('static', filename='uploads/' + dispositivo.fotos[0].ruta_archivo) }}" alt="Foto de {{ dispositivo.dispositivo_nombre }}" width="1280" height="1024">
+                        </div>
+                    </div>
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/no-image.jpg') }}" alt="Sin foto" width="640" height="480">
+                {% endif %}
+            </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <h2>Comentarios</h2>
+
+    <!-- Mostrar comentarios existentes -->
+    <ul>
+      {% for comentario in comentarios %}
+          <li>
+              <strong>{{ comentario.nombre }}</strong> ({{ comentario.fecha }}):<br>
+              {{ comentario.texto }}
+          </li>
+      {% else %}
+          <li>No hay comentarios aún.</li>
+      {% endfor %}
+    </ul>
+  
+
+    <!-- Formulario para añadir un comentario -->
+    <h3>Añadir un comentario</h3>
+    <form action="{{ url_for('agregar_comentario', id=dispositivo.id) }}" method="POST">
+        <label for="autor">Nombre:</label><br>
+        <input type="text" id="autor" name="autor" required><br><br>
+        <label for="contenido">Comentario:</label><br>
+        <textarea id="contenido" name="contenido" required></textarea><br><br>
+        <button type="submit" onclick="validarComentario()">Agregar comentario</button>
+    </form>
+
+    <!-- Mensaje de validación -->
+    <div id="val-box" hidden>
+      <h2 id="val-msg"></h2>
+      <ul id="val-list"></ul>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <div id="success-message" hidden>
+      <h2>El comentario se ha agregado exitosamente.</h2>
+    </div>
+
+
+    <a href="{{ url_for('index') }}" class="button">Volver al inicio</a>
+    
+    <script src="{{ url_for('static', filename='js/informacion-dispositivo.js') }}"></script>
+
+</body>
+</html>

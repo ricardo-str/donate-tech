@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/agregar-donacion.css') }}">
+    <title>Agregar Donación</title>
+</head>
+  <body>
+    <h1 class="h1">Agregar Donación</h1>
+    <div class="contenido">
+      <form name="formulario" method="post" enctype="multipart/form-data" class="formulario" action="{{ url_for('agregar_donacion') }}">
+          <h2>Información de Contacto</h2>
+          <div id="nombre-input" class="agregar-donacion-input">
+            <label for="nombre">Nombre donante</label>
+            <input id="nombre" name="nombre" size="80" type="text" maxlength="80" required>
+          </div>
+          <div id="email-input" class="agregar-donacion-input">
+            <label for="email">Email </label>
+            <input id="email" name="email" type="email" maxlength="30" required>
+          </div>
+          <div id="celular-input" class="agregar-donacion-input">
+            <label for="celular">Número celular</label>
+            <input id="celular" name="celular" type="text" placeholder="+56">
+          </div>  
+          <div id="region-input" class="agregar-donacion-input">
+            <label for="region">Región</label>
+            <select id="region" name="region" required>
+              <option value="">Seleccione una región</option>
+            </select>
+          </div>
+          <div id="comuna-input" class="agregar-donacion-input">
+            <label for="comuna">Comuna</label>
+            <select id="comuna" name="comuna" required>
+              <option value="">Seleccione una comuna</option>
+            </select>
+          </div>
+          <div id="dispositivos-container">
+            <div class="dispositivo-form">
+                <h2>Información Dispositivo 1</h2>      
+                <div id="nombre-dispositivo-input" class="agregar-donacion-input">
+                    <label for="nombre-dispositivo-1">Nombre dispositivo</label>
+                    <input id="nombre-dispositivo-1" name="nombre-dispositivo" type="text" maxlength="80" required>
+                </div>
+                <div id="descripcion-input" class="agregar-donacion-input">
+                    <label for="descripcion-1">Descripción</label>
+                    <input id="descripcion-1" name="descripcion" type="text" maxlength="80">
+                </div>
+                <div id="tipo-donacion-input" class="agregar-donacion-input">
+                    <label for="tipo-donacion-1">Tipo </label>
+                    <select id="tipo-donacion-1" name="tipo-donacion" required>
+                        <option value="" disabled selected>Selecciona el tipo de Dispositivo</option>
+                        <option value="pantalla">pantalla</option>
+                        <option value="notebook">notebook</option>
+                        <option value="tablet">tablet</option>
+                        <option value="celular">celular</option>
+                        <option value="consola">consola</option>
+                        <option value="mouse">mouse</option>
+                        <option value="teclado">teclado</option>
+                        <option value="impresora">impresora</option>
+                        <option value="parlante">parlante</option>
+                        <option value="audifonos">audífonos</option>
+                        <option value="otro">otro</option>
+                    </select>  
+                </div>
+                <div id="anhos-uso-input" class="agregar-donacion-input">
+                    <label for="anhos-uso-1">Años de uso</label>
+                    <input id="anhos-uso-1" name="anhos-uso" type="text" size="3" maxlength="2" required>
+                </div>
+                <div id="estado-funcionamiento-input" class="agregar-donacion-input">
+                    <label for="estado-funcionamiento-1">Estado funcionamiento </label>
+                    <select id="estado-funcionamiento-1" name="estado-funcionamiento" required>
+                        <option value="" disabled selected>Selecciona el Estado de Funcionamiento</option>
+                        <option value="funciona perfecto">funciona perfecto</option>
+                        <option value="funciona a medias">funciona a medias</option>
+                        <option value="no funciona">no funciona</option>
+                    </select>  
+                </div>
+                <div id="foto-input" class="agregar-donacion-input">
+                    <label for="foto-1">Foto donación</label>
+                    <input id="foto-1" name="foto" type="file" multiple accept="image/*" required>
+                </div>
+            </div>
+          </div>
+
+          <div class="botones">
+              <button type="button" id="add-device-btn">Agregar otro dispositivo</button>
+              <div></div>
+              <button type="submit" id="envio">
+                  Publicar esta donación
+              </button>
+          </div>
+
+          <div id="confirmation-modal" class="modal" hidden>
+              <div class="modal-content">
+                <p>¿Confirma que desea agregar esta donación?</p>
+                <div class="modal-buttons">
+                  <button type="button" id="confirm-donation">Sí, confirmo</button>
+                  <button type="button" id="cancel-donation">No, quiero volver al formulario</button>
+                </div>
+              </div>
+          </div>
+          <div id="success-message" class="modal" hidden>
+              <div class="modal-content">
+                <h2>Hemos recibido la información de su donación. Muchas gracias.</h2>
+                <button type="button" onclick="window.location.href='{{ url_for('index') }}'">Volver a la portada</button>
+              </div>
+          </div>
+          <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+          </div>
+        </form>
+      </div>
+    <a href="{{ url_for('index') }}" class="button">Volver al inicio</a>
+    <script src="{{ url_for('static', filename='js/agregar-donacion.js') }}"></script>
+  </body>
+</html>
