@@ -1,88 +1,93 @@
-# Tarea 3 CC5002 Desarrollo Aplicaciones Web 
 
-Nombre: Ricardo Sepúlveda Tritini
+# Donate Tech - Web Application
 
-## Requisitos
+**Developer**: ricardo-str
 
-Tener Python 3.x instalado en tu equipo.
+## Requirements
 
-## Instalación
+- Python 3.x must be installed on your system.
 
-1. Descargar este proyecto en tu dispositivo:
+## Installation
 
-2. Instala las dependencias desde el archivo `requirements.txt`:
+1. Download this project to your local device.
+2. Install the dependencies from the `requirements.txt` file:
 
    ```bash
    pip install -r requirements.txt
    ```
-3. Si tienes problemas con el comando anterior, elimina la carpeta venv del proyecto e intenta de nuevo.
 
-**nota**: a veces no se instalan bien las versiones de las dependencias que están requirements.txt, así que hay que instalarlas 'a mano'.
 
-## Uso
+**Note**: Sometimes, the required dependencies in `requirements.txt` may not install correctly, so you may need to install them manually.
 
-Ejecuta la aplicación utilizando el comando
+## Running the Application
+
+To run the application, execute the following command:
 
 ```bash
 python app.py
 ```
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
-TAREA 3/
+database/
 │         
-├── database/        
-│   └── db.py
-│   └── region-comuna.sql
-│   └── sentencias.sql
-│   └── tarea2.sql          
-├── static/
-│   └── css/
-│   └── js/
-│   └── media/ 
-│   └── uploads/            
-├── templates/
-│   └── agregar-donacion.html
-│   └── index.html 
-│   └── informacion-dispositivo.html 
-│   └── ver-dispositivos.html
-│   └── menu.html
-│   └── stats.html
-│   └── stats2.html 
-├── utils/            
-│   └── validations.py  
-├── app.py   
-└── requirements.txt  
+├── db.py
+├── region-comuna.sql
+├── sentencias.sql
+├── tarea2.sql          
+static/
+├── css/
+├── js/
+├── media/ 
+├── uploads/            
+templates/
+├── agregar-donacion.html
+├── index.html 
+├── informacion-dispositivo.html 
+├── ver-dispositivos.html
+├── menu.html
+├── stats.html
+├── stats2.html 
+utils/            
+├── validations.py  
+app.py
+README.md   
+requirements.txt  
 ```
-## Bases de Datos
 
-El proyecto contiene tres archivos sql. Para poder almacenar los datos utilizando mysql debemos ejecutar el contenido de tarea2.sql para la creación de esquemas y de tablas en donde se guardará la información. Posteriormente se debe ejecutar el contenido del archivo region-comuna.sql para poder almacenar las regiones y sus respectivas comunas en la tabla correspondiente. Finalmente, se debe ejecutar el archivo sentencias.sql, aquí es donde crearemos el usuario y le daremos sus correspondientes privilegios/permisos para el correcto funcionamiento de la aplicación. 
+## Database Setup
 
-Se hace uso del archivo llamado sentencias.json, el cual contiene las querys utilizadas durante el proyecto para insertar u obtener la información necesaria. 
+This project includes three SQL files. To store the data using MySQL, follow these steps:
 
-Por último, se incluye también el archivo db.py, que es donde se conecta la base de datos y se ejecutan las consultas desde el archivo sentencias.json.
+1. Run the `tarea2.sql` script to create the necessary database schema and tables for storing information.
+2. Next, run the `region-comuna.sql` script to insert the regions and their respective communes into the corresponding table.
+3. Finally, execute the `sentencias.sql` script to create a user and grant the required privileges/permissions for the application to function correctly.
 
-## Validaciones
+Additionally, the project uses a `sentencias.json` file, which contains the queries for inserting and retrieving the required data.
 
-El proyecto hace "validaciones" en el frontend a través de Javascript, tal y como se hizo en la Tarea 1. Adicionalmente se crea el archivo validations.py para realizar las verdaderas validaciones en el backend para cada entrada, incluyendo una sanitización del texto para prevenir ataques de tipo XSS.
+Lastly, `db.py` is included to handle the database connection and execute queries defined in `sentencias.json`.
 
-Se incluyen las nuevas validaciones tanto en el frontend (utilizando Javascript) como en el backend para los comentarios de los dispositivos.
+## Validation
 
-## Correcciones 
+The project performs **frontend validations** using JavaScript, as in Task 1. Additionally, a new file `validations.py` has been created to perform **backend validations** for each input, including sanitizing text inputs to prevent XSS attacks.
 
-El proyecto presenta correcciones respecto a problemas que ocurrian en la entrega pasada:
+Both frontend (JavaScript) and backend validations are applied to the comments section for devices.
 
-- **No poder insertar más de un dispositivo a la vez**: cuando se intentaba agregar dos o más dispositivos en el formulario de agregar donación, solo se se insertaba el primero y se mostraba en la página de "Ver Donaciones", ahora se pueden agregar correctamente múltiples dispositivos simultáneamente.
+## Fixes
 
-- **No limitar el tamaño de archivo**: en la versión anterior de la tarea, no existía un mecanismo para limitar el tamaño máximo de un archivo, lo que podría ser peligroso. Se solucionó utilizando 'MAX_CONTENT_LENGTH' en el archivo app.py.
+This version includes fixes for issues that were present in the previous submission:
 
-- **Permitir archivos PDF**: en la versión anterior de la tarea se aceptaban archivos PDF cuando no era una extensión permitida, ahora cuando se intenta seleccionar un archivo .pdf no se puede enviar el formulario de agregar-donacion. 
+- **Multiple Device Insertions**: Previously, when trying to add two or more devices in the donation form, only the first one would be inserted. Now, multiple devices can be added simultaneously without issues.
 
-## Novedades Tarea 3
+- **File Size Limitation**: In the previous version, there was no mechanism to limit the maximum file size, which could be risky. This has been addressed using the `MAX_CONTENT_LENGTH` setting in `app.py`.
 
-- **Comentarios**: se incluye un nuevo formulario en la URL de 'informacion-dispositivo' que solicita el nombre y el texto del comentario. Si no cumple las validaciones, se informa al usuario y se deja visible el formulario para corregir. 
+- **PDF File Restrictions**: PDF files were being accepted when they shouldn't have been. Now, when attempting to select a `.pdf` file, the donation form submission is blocked.
 
-   También se pueden ver los comentarios asociados al dispositivo en la misma URL, con el nombre del comentarista, el texto y la fecha de envío.
+## Task 3 Features
 
-- **Gráficos**: se agregó una nueva opción en el menú inicial, en donde se puede acceder a una nueva página que contiene dos opciones de gráficos distintos: *Tipo de Dispositivos* y *Contactos por Comuna*. Ambos gráficos fueron hechos correctamente utilizando AJAX y Highcharts. 
+- **Comments**: A new form has been added to the 'informacion-dispositivo' URL, allowing users to submit comments (name and text). If validation fails, the user is informed, and the form remains visible for corrections.
+
+   Comments for each device can also be viewed on the same page, showing the commenter's name, text, and submission date.
+
+- **Charts**: A new option has been added to the main menu, where users can access a page containing two different charts: *Device Types* and *Contacts by Commune*. These charts were implemented using AJAX and Highcharts.
